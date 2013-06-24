@@ -19,6 +19,12 @@
 		E7C7642C17788C4C00B3CEB5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C7642B17788C4C00B3CEB5 /* ViewController.m */; };
 		E7C7642F17788C4C00B3CEB5 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7C7642D17788C4C00B3CEB5 /* ViewController_iPhone.xib */; };
 		E7C7643217788C4C00B3CEB5 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7C7643017788C4C00B3CEB5 /* ViewController_iPad.xib */; };
+		E7C7643A17788DF700B3CEB5 /* AppService.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C7643917788DF700B3CEB5 /* AppService.m */; };
+		E7C7643C17788F0000B3CEB5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7C7643B17788F0000B3CEB5 /* Settings.bundle */; };
+		E7C7643F177893B100B3CEB5 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E7C7643D177893B100B3CEB5 /* DataModel.xcdatamodeld */; };
+		E7C764431778942800B3CEB5 /* DBPlaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C764421778942800B3CEB5 /* DBPlaceObject.m */; };
+		E7C76445177895D400B3CEB5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C76444177895D400B3CEB5 /* CoreData.framework */; };
+		E7C7644817789C3B00B3CEB5 /* NSDictionary+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C7644717789C3B00B3CEB5 /* NSDictionary+Utility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +45,15 @@
 		E7C7642B17788C4C00B3CEB5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E7C7642E17788C4C00B3CEB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		E7C7643117788C4C00B3CEB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		E7C7643817788DF700B3CEB5 /* AppService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppService.h; sourceTree = "<group>"; };
+		E7C7643917788DF700B3CEB5 /* AppService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppService.m; sourceTree = "<group>"; };
+		E7C7643B17788F0000B3CEB5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		E7C7643E177893B100B3CEB5 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		E7C764411778942800B3CEB5 /* DBPlaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBPlaceObject.h; path = data/DBPlaceObject.h; sourceTree = "<group>"; };
+		E7C764421778942800B3CEB5 /* DBPlaceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBPlaceObject.m; path = data/DBPlaceObject.m; sourceTree = "<group>"; };
+		E7C76444177895D400B3CEB5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E7C7644617789C3B00B3CEB5 /* NSDictionary+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utility.h"; sourceTree = "<group>"; };
+		E7C7644717789C3B00B3CEB5 /* NSDictionary+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utility.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7C76445177895D400B3CEB5 /* CoreData.framework in Frameworks */,
 				E7C7641317788C4C00B3CEB5 /* UIKit.framework in Frameworks */,
 				E7C7641517788C4C00B3CEB5 /* Foundation.framework in Frameworks */,
 				E7C7641717788C4C00B3CEB5 /* CoreGraphics.framework in Frameworks */,
@@ -75,6 +91,7 @@
 		E7C7641117788C4C00B3CEB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E7C76444177895D400B3CEB5 /* CoreData.framework */,
 				E7C7641217788C4C00B3CEB5 /* UIKit.framework */,
 				E7C7641417788C4C00B3CEB5 /* Foundation.framework */,
 				E7C7641617788C4C00B3CEB5 /* CoreGraphics.framework */,
@@ -85,6 +102,10 @@
 		E7C7641817788C4C00B3CEB5 /* CityGuide */ = {
 			isa = PBXGroup;
 			children = (
+				E7C7644917789C4100B3CEB5 /* lib */,
+				E7C76440177893B700B3CEB5 /* data */,
+				E7C7643817788DF700B3CEB5 /* AppService.h */,
+				E7C7643917788DF700B3CEB5 /* AppService.m */,
 				E7C7642117788C4C00B3CEB5 /* AppDelegate.h */,
 				E7C7642217788C4C00B3CEB5 /* AppDelegate.m */,
 				E7C7642A17788C4C00B3CEB5 /* ViewController.h */,
@@ -106,8 +127,28 @@
 				E7C7642417788C4C00B3CEB5 /* Default.png */,
 				E7C7642617788C4C00B3CEB5 /* Default@2x.png */,
 				E7C7642817788C4C00B3CEB5 /* Default-568h@2x.png */,
+				E7C7643B17788F0000B3CEB5 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E7C76440177893B700B3CEB5 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				E7C7643D177893B100B3CEB5 /* DataModel.xcdatamodeld */,
+				E7C764411778942800B3CEB5 /* DBPlaceObject.h */,
+				E7C764421778942800B3CEB5 /* DBPlaceObject.m */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		E7C7644917789C4100B3CEB5 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E7C7644617789C3B00B3CEB5 /* NSDictionary+Utility.h */,
+				E7C7644717789C3B00B3CEB5 /* NSDictionary+Utility.m */,
+			);
+			name = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +207,7 @@
 				E7C7642917788C4C00B3CEB5 /* Default-568h@2x.png in Resources */,
 				E7C7642F17788C4C00B3CEB5 /* ViewController_iPhone.xib in Resources */,
 				E7C7643217788C4C00B3CEB5 /* ViewController_iPad.xib in Resources */,
+				E7C7643C17788F0000B3CEB5 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +221,10 @@
 				E7C7641F17788C4C00B3CEB5 /* main.m in Sources */,
 				E7C7642317788C4C00B3CEB5 /* AppDelegate.m in Sources */,
 				E7C7642C17788C4C00B3CEB5 /* ViewController.m in Sources */,
+				E7C7643A17788DF700B3CEB5 /* AppService.m in Sources */,
+				E7C7643F177893B100B3CEB5 /* DataModel.xcdatamodeld in Sources */,
+				E7C764431778942800B3CEB5 /* DBPlaceObject.m in Sources */,
+				E7C7644817789C3B00B3CEB5 /* NSDictionary+Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +357,20 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E7C7643D177893B100B3CEB5 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E7C7643E177893B100B3CEB5 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = E7C7643E177893B100B3CEB5 /* DataModel.xcdatamodel */;
+			name = DataModel.xcdatamodeld;
+			path = data/DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E7C7640717788C4C00B3CEB5 /* Project object */;
 }

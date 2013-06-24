@@ -22,6 +22,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"data_url"]) {
+        [defaults setObject:@"http://m.saritasa.com/testtask/places.json" forKey:@"data_url"];
+    }
+    
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];

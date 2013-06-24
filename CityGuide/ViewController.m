@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppService.h"
 
 @interface ViewController ()
 
@@ -18,6 +19,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    [[AppService sharedInstance] beginUpdateDataWithCompletionBlock:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning
