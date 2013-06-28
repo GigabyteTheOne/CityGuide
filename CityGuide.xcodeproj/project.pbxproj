@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E703D44D177E0C7100931F94 /* PlaceTableCellInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = E703D44C177E0C7100931F94 /* PlaceTableCellInfo.m */; };
 		E7C7641317788C4C00B3CEB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C7641217788C4C00B3CEB5 /* UIKit.framework */; };
 		E7C7641517788C4C00B3CEB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C7641417788C4C00B3CEB5 /* Foundation.framework */; };
 		E7C7641717788C4C00B3CEB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C7641617788C4C00B3CEB5 /* CoreGraphics.framework */; };
@@ -28,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E703D44B177E0C7100931F94 /* PlaceTableCellInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceTableCellInfo.h; path = data/PlaceTableCellInfo.h; sourceTree = "<group>"; };
+		E703D44C177E0C7100931F94 /* PlaceTableCellInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceTableCellInfo.m; path = data/PlaceTableCellInfo.m; sourceTree = "<group>"; };
 		E7C7640F17788C4C00B3CEB5 /* CityGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CityGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7C7641217788C4C00B3CEB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E7C7641417788C4C00B3CEB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -138,6 +141,8 @@
 				E7C7643D177893B100B3CEB5 /* DataModel.xcdatamodeld */,
 				E7C764411778942800B3CEB5 /* DBPlaceObject.h */,
 				E7C764421778942800B3CEB5 /* DBPlaceObject.m */,
+				E703D44B177E0C7100931F94 /* PlaceTableCellInfo.h */,
+				E703D44C177E0C7100931F94 /* PlaceTableCellInfo.m */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 				E7C7643F177893B100B3CEB5 /* DataModel.xcdatamodeld in Sources */,
 				E7C764431778942800B3CEB5 /* DBPlaceObject.m in Sources */,
 				E7C7644817789C3B00B3CEB5 /* NSDictionary+Utility.m in Sources */,
+				E703D44D177E0C7100931F94 /* PlaceTableCellInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +361,7 @@
 				E7C7643717788C4C00B3CEB5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

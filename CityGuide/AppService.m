@@ -33,7 +33,7 @@ static AppService *_sharedInstance;
     return _sharedInstance;
 }
 
--(void)beginUpdateData {
+-(void)beginUpdateDataWithCompletionBlock:(void(^)())completionBlock {
     NSString *urlString = [[[NSUserDefaults standardUserDefaults] objectForKey:@"data_url"] autorelease];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -45,7 +45,8 @@ static AppService *_sharedInstance;
             if (dataDict) {
                 NSArray *places = [dataDict valueForKeyNotNull:@"places"];
                 if (places != nil) {
-                    [self beginSavePlaces:places];
+                    [self savePlaces:places];
+                    completionBlock();
                 }
             }
             else {
@@ -58,7 +59,22 @@ static AppService *_sharedInstance;
     }];
 }
 
--(void)beginSavePlaces:(NSArray *)places {
+-(void)beginLoadImage:(NSString *)imageUrl withCompletionBlock:(void(^)(UIImage *image))completionBlock {
+    NSURL *url = [NSURL URLWithString:imageUrl];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (!error) {
+            UIImage *image = [[[UIImage alloc] initWithData:data] autorelease];
+            completionBlock(image);
+        }
+        else {
+            NSLog(@"There's some error with data %@", error.description);
+        }
+    }];
+}
+
+-(void)savePlaces:(NSArray *)places {
     NSFetchRequest * requestAll = [[[NSFetchRequest alloc] init] autorelease];
     [requestAll setEntity:[NSEntityDescription entityForName:@"DBPlaceObject" inManagedObjectContext:[[AppService sharedInstance] managedObjectContext]]];
     
@@ -179,6 +195,24 @@ static AppService *_sharedInstance;
     }
     
     return _persistentStoreCoordinator;
+}
+
+#pragma mark - Data methods
+
+- (NSArray *)getAllPlaces
+{
+    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:@"DBPlaceObject" inManagedObjectContext:[[AppService sharedInstance] managedObjectContext]]];
+    
+    NSSortDescriptor *sorDescr = [[NSSortDescriptor alloc] initWithKey:@"city" ascending:YES];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sorDescr, nil]];
+    
+    NSError *fetchError = nil;
+    NSArray *places = [[[AppService sharedInstance] managedObjectContext] executeFetchRequest:fetchRequest error:&fetchError];
+    if (fetchError == nil) {
+        return places;
+    }
+    return nil;
 }
 
 @end
