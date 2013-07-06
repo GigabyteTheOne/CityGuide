@@ -34,7 +34,7 @@ static AppService *_sharedInstance;
 }
 
 -(void)beginUpdateDataWithCompletionBlock:(void(^)())completionBlock {
-    NSString *urlString = [[[NSUserDefaults standardUserDefaults] objectForKey:@"data_url"] autorelease];
+    NSString *urlString = [[NSUserDefaults standardUserDefaults] objectForKey:@"data_url"];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -46,7 +46,6 @@ static AppService *_sharedInstance;
                 NSArray *places = [dataDict valueForKeyNotNull:@"places"];
                 if (places != nil) {
                     [self savePlaces:places];
-                    completionBlock();
                 }
             }
             else {
@@ -56,21 +55,7 @@ static AppService *_sharedInstance;
         else {
             NSLog(@"There's some error with data %@", error.description);
         }
-    }];
-}
-
--(void)beginLoadImage:(NSString *)imageUrl withCompletionBlock:(void(^)(UIImage *image))completionBlock {
-    NSURL *url = [NSURL URLWithString:imageUrl];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (!error) {
-            UIImage *image = [[[UIImage alloc] initWithData:data] autorelease];
-            completionBlock(image);
-        }
-        else {
-            NSLog(@"There's some error with data %@", error.description);
-        }
+        completionBlock();
     }];
 }
 
@@ -204,7 +189,7 @@ static AppService *_sharedInstance;
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"DBPlaceObject" inManagedObjectContext:[[AppService sharedInstance] managedObjectContext]]];
     
-    NSSortDescriptor *sorDescr = [[NSSortDescriptor alloc] initWithKey:@"city" ascending:YES];
+    NSSortDescriptor *sorDescr = [[[NSSortDescriptor alloc] initWithKey:@"city" ascending:YES] autorelease];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sorDescr, nil]];
     
     NSError *fetchError = nil;

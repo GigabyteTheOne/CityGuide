@@ -9,13 +9,14 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "MapViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation AppDelegate
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
     [super dealloc];
 }
 
@@ -23,18 +24,22 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
+    [GMSServices provideAPIKey:@"AIzaSyCqmRWG-ObTFkm38O6UZz_FYwrxIXLrgvo"];
+    
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults objectForKey:@"data_url"]) {
         [defaults setObject:@"http://m.saritasa.com/testtask/places.json" forKey:@"data_url"];
     }
     
-    // Override point for customization after application launch.
+    UIViewController *viewController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
+        viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
     } else {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
+        viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
     }
-    self.window.rootViewController = self.viewController;
+    
+    UINavigationController *navigationViewController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
+    self.window.rootViewController = navigationViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

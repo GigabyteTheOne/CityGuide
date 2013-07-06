@@ -12,5 +12,4 @@
 @synthesize text = _text;
 @synthesize imageUrl = _imageUrl;
 
-
 @end

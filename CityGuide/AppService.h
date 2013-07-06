@@ -17,7 +17,6 @@
 +(id)getObjectFromJSON:(NSString *)jsonString;
 
 -(void)beginUpdateDataWithCompletionBlock:(void(^)())completionBlock;
--(void)beginLoadImage:(NSString *)imageUrl withCompletionBlock:(void(^)(UIImage *image))completionBlock;
 - (NSArray *)getAllPlaces;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
