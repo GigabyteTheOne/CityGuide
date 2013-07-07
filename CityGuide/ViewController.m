@@ -37,7 +37,7 @@ const int CELL_HEIGHT = 56;
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:_addBarButton, _refreshBarButton, nil]];
     
     NSArray *places = [[AppService sharedInstance] getAllPlaces];
-    if (places != nil) {
+    if ((places != nil) && (places.count > 0)) {
         [self setDataToTable:places];
     }
     else {
