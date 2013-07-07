@@ -52,6 +52,7 @@ const int CELL_HEIGHT = 56;
     [_filterBarButton release];
     [_refreshBarButton release];
     [_filterBarButton release];
+//    [_locationManager release];
     
     [super viewDidUnload];
 }
@@ -60,6 +61,23 @@ const int CELL_HEIGHT = 56;
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)refreshTableData
+{
+    if (_filterValue != -1) {
+        [self startProgressView];
+        
+        CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.distanceFilter = kCLDistanceFilterNone;
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+        [locationManager startUpdatingLocation];
+    }
+    else {
+        NSArray *places = [[AppService sharedInstance] getAllPlaces];
+        [self setDataToTable:places];
+    }
 }
 
 - (void)setDataToTable:(NSArray *)places
@@ -258,23 +276,34 @@ const int CELL_HEIGHT = 56;
 {
     switch (buttonIndex) {
         case 0:
-            NSLog(@"1 mile");
+            _filterValue = 1;
             break;
         case 1:
-            NSLog(@"10 mile");
+            _filterValue = 10;
             break;
         case 2:
-            NSLog(@"100 mile");
+            _filterValue = 100;
             break;
-
+        case 3:
+            _filterValue = -1;
+            break;
         default:
             break;
     }
+    [self refreshTableData];
 }
 
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+#pragma mark - CLLocationManagerDelegate methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"Filter reset");
+    [manager stopUpdatingLocation];
+    
+    NSArray *places = [[AppService sharedInstance] getPlacesInRadius:_filterValue ofLocation:newLocation];
+    [self setDataToTable:places];
+    
+    [manager release];
+    [self stopProgressView];
 }
 
 

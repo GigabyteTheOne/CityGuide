@@ -200,4 +200,21 @@ static AppService *_sharedInstance;
     return nil;
 }
 
+- (NSArray *)getPlacesInRadius:(int)radiusValue ofLocation:(CLLocation*)location
+{
+    NSArray *places = [self getAllPlaces];
+    
+    //For each row calculates distance from current location to the place point, then filters it
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        DBPlaceObject *place = evaluatedObject;
+        CLLocation *placeLocation   = [[[CLLocation alloc] initWithLatitude:place.latitude.doubleValue longitude:place.longtitude.doubleValue] autorelease];
+        CLLocationDistance distance = [placeLocation distanceFromLocation:location];
+        double distanceInMiles = distance / 1000 * 0.621371192;
+        return distanceInMiles < radiusValue;
+    }];
+    
+    NSArray *filteredPlaces = [places filteredArrayUsingPredicate:predicate];
+    return filteredPlaces;
+}
+
 @end

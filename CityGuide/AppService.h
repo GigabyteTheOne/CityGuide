@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppService : NSObject
 {
@@ -18,6 +19,7 @@
 
 -(void)beginUpdateDataWithCompletionBlock:(void(^)())completionBlock;
 - (NSArray *)getAllPlaces;
+- (NSArray *)getPlacesInRadius:(int)radiusValue ofLocation:(CLLocation*)location;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

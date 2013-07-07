@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate>
 {
     NSDictionary *_tableData;
     UIBarButtonItem *_filterBarButton;
@@ -17,6 +18,8 @@
     
     UIView *_backgroundActivityView;
     UIActivityIndicatorView *_activityIndicator;
+    
+    int _filterValue;
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
