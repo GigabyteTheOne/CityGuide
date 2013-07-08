@@ -31,15 +31,27 @@
         [defaults setObject:@"http://m.saritasa.com/testtask/places.json" forKey:@"data_url"];
     }
     
-    UIViewController *viewController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
+        ViewController *viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
+        UINavigationController *navigationViewController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
+        self.window.rootViewController = navigationViewController;
     } else {
-        viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
+        ViewController *viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
+        UINavigationController *masterNavigationController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
+        
+        MapViewController *mapViewController = [[[MapViewController alloc] init] autorelease];
+        UINavigationController *detailNavigationController = [[[UINavigationController alloc] initWithRootViewController:mapViewController] autorelease];
+        
+        viewController.mapViewController = mapViewController;
+    	
+        UISplitViewController *splitViewController = [[[UISplitViewController alloc] init] autorelease];
+        splitViewController.delegate = mapViewController;
+        splitViewController.viewControllers = @[masterNavigationController, detailNavigationController];
+        
+        self.window.rootViewController = splitViewController;
     }
     
-    UINavigationController *navigationViewController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
-    self.window.rootViewController = navigationViewController;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -198,9 +198,9 @@
 				E7C7642B17788C4C00B3CEB5 /* ViewController.m */,
 				E7C7642D17788C4C00B3CEB5 /* ViewController_iPhone.xib */,
 				E7C7643017788C4C00B3CEB5 /* ViewController_iPad.xib */,
-				E7C7641917788C4C00B3CEB5 /* Supporting Files */,
 				E79D1DDA17835AF60019A4B5 /* MapViewController.h */,
 				E79D1DDB17835AF60019A4B5 /* MapViewController.m */,
+				E7C7641917788C4C00B3CEB5 /* Supporting Files */,
 			);
 			path = CityGuide;
 			sourceTree = "<group>";

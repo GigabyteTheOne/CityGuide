@@ -11,7 +11,6 @@
 #import "DBPlaceObject.h"
 #import "PlaceTableCellInfo.h"
 #import "PlaceTableViewCell.h"
-#import "MapViewController.h"
 
 @interface ViewController ()
 
@@ -30,12 +29,19 @@ const int CELL_HEIGHT = 56;
     _tableData = [[NSDictionary alloc] init];
     _filterBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(filterButtonOnClick:)];
     _refreshBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonOnClick:)];
-    _addBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addButtonOnClick:)];
+//    _addBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addButtonOnClick:)];
     
     self.title = @"List of places";
     [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:_filterBarButton, nil]];
-    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:_addBarButton, _refreshBarButton, nil]];
-    
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:_refreshBarButton, nil]];
+        
+    if (_mapViewController == nil) {
+        _mapViewController = [[MapViewController alloc] init];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     NSArray *places = [[AppService sharedInstance] getAllPlaces];
     if ((places != nil) && (places.count > 0)) {
         [self setDataToTable:places];
@@ -52,7 +58,9 @@ const int CELL_HEIGHT = 56;
     [_filterBarButton release];
     [_refreshBarButton release];
     [_filterBarButton release];
-//    [_locationManager release];
+    if (_mapViewController) {
+        [_mapViewController release];
+    }
     
     [super viewDidUnload];
 }
@@ -111,6 +119,8 @@ const int CELL_HEIGHT = 56;
     
     _tableData = [tmpTableData retain];
     [_tableView reloadData];
+    
+    _mapViewController.places = places;
 }
 
 - (void)downloadPlaces
@@ -126,7 +136,8 @@ const int CELL_HEIGHT = 56;
 
 - (void)startProgressView
 {
-    _backgroundActivityView = [[UIView alloc] initWithFrame:self.view.bounds];
+    CGRect frame = self.view.bounds;
+    _backgroundActivityView = [[UIView alloc] initWithFrame:frame];
     _backgroundActivityView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.7];
     [self.view addSubview:_backgroundActivityView];
     
@@ -189,7 +200,6 @@ const int CELL_HEIGHT = 56;
         if ([simpleTableIdentifier isEqualToString:@"PlaceCell"]) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PlaceTableViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:0];
-//            cell = [[[PlaceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier] autorelease];
         }
         else {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier] autorelease];
@@ -249,17 +259,20 @@ const int CELL_HEIGHT = 56;
     NSArray *sectionData = [_tableData valueForKey:key];
     PlaceTableCellInfo *placeInfo = [sectionData objectAtIndex:indexPath.row];
     if (placeInfo.placeObject != nil) {
-        MapViewController *newViewController = [[[MapViewController alloc] init] autorelease];
-        newViewController.latitude = placeInfo.placeObject.latitude;
-        newViewController.longitude = placeInfo.placeObject.longtitude;
-        [self.navigationController pushViewController:newViewController animated:YES];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            [self.navigationController pushViewController:_mapViewController animated:YES];
+            [_mapViewController setCameraLatitude:placeInfo.placeObject.latitude longitude:placeInfo.placeObject.longtitude zoom:[NSNumber numberWithFloat:14] animated:NO];
+        }
+        else {
+            [_mapViewController setCameraLatitude:placeInfo.placeObject.latitude longitude:placeInfo.placeObject.longtitude zoom:[NSNumber numberWithFloat:14] animated:YES];
+        }
     }
 }
 
 #pragma mark - Navigation buttons
 
 - (void)filterButtonOnClick:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Filter distance" delegate:self cancelButtonTitle:@"Cancel filter" destructiveButtonTitle:nil otherButtonTitles:@"1 mile", @"10 miles", @"100 miles", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Filter distance" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"Remove filter" otherButtonTitles:@"1 mile", @"10 miles", @"100 miles", nil];
     [actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
@@ -275,16 +288,16 @@ const int CELL_HEIGHT = 56;
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
-        case 0:
+        case 1:
             _filterValue = 1;
             break;
-        case 1:
+        case 2:
             _filterValue = 10;
             break;
-        case 2:
+        case 3:
             _filterValue = 100;
             break;
-        case 3:
+        case 0:
             _filterValue = -1;
             break;
         default:

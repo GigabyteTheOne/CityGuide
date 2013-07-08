@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MapViewController.h"
 
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate>
 {
@@ -23,5 +24,6 @@
 }
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) MapViewController *mapViewController;
 
 @end
