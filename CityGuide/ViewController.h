@@ -13,6 +13,7 @@
 @interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate>
 {
     NSDictionary *_tableData;
+    NSArray *_alphabetIndex;
     UIBarButtonItem *_filterBarButton;
     UIBarButtonItem *_refreshBarButton;
     UIBarButtonItem *_addBarButton;

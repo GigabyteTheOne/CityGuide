@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "PlaceInputViewController.h"
 
-@interface MapViewController : UIViewController <UISplitViewControllerDelegate>
+@interface MapViewController : UIViewController <UISplitViewControllerDelegate, GMSMapViewDelegate, PlaceInputDelegate>
 {
+    UIPopoverController *_placeInputPopover;
 }
 
 @property (retain) NSNumber *latitude;

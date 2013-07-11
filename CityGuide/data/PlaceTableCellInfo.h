@@ -15,5 +15,6 @@
 @property (retain) NSString *imageUrl;
 @property (retain) UIImage *image;
 @property (retain) DBPlaceObject *placeObject;
+@property BOOL isCityCell;
 
 @end

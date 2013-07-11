@@ -25,7 +25,7 @@ const int CELL_HEIGHT = 56;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    _filterValue = -1;
     _tableData = [[NSDictionary alloc] init];
     _filterBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(filterButtonOnClick:)];
     _refreshBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonOnClick:)];
@@ -38,6 +38,13 @@ const int CELL_HEIGHT = 56;
     if (_mapViewController == nil) {
         _mapViewController = [[MapViewController alloc] init];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNewPlaceNotification:) name:@"NewPlace" object:nil];
+}
+
+- (void)onNewPlaceNotification:(NSNotification *)notification
+{
+    [self refreshTableData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -61,6 +68,7 @@ const int CELL_HEIGHT = 56;
     if (_mapViewController) {
         [_mapViewController release];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super viewDidUnload];
 }
@@ -91,33 +99,40 @@ const int CELL_HEIGHT = 56;
 - (void)setDataToTable:(NSArray *)places
 {
     NSMutableDictionary *tmpTableData = [[NSMutableDictionary new] autorelease];
+    NSMutableArray *newAlphabetIndex = [[NSMutableArray new] autorelease];
     
     NSString *lastCityName = @"";
     for (DBPlaceObject *place in places) {
-        unichar firstLetterChar = [place.city characterAtIndex:0];
-        NSString *firstLetter = [NSString stringWithFormat:@"%C", firstLetterChar];
-        
-        NSMutableArray *curArray = [tmpTableData objectForKey:firstLetter];
-        if (curArray == nil) {
-            curArray = [[NSMutableArray new] autorelease];
+        if ((place.city != nil) && (place.city.length > 0)) {
+            unichar firstLetterChar = [place.city characterAtIndex:0];
+            NSString *firstLetter = [NSString stringWithFormat:@"%C", firstLetterChar];
+            
+            NSMutableArray *curArray = [tmpTableData objectForKey:firstLetter];
+            if (curArray == nil) {
+                curArray = [[NSMutableArray new] autorelease];
+                [newAlphabetIndex addObject:firstLetter];
+            }
+            
+            if (![lastCityName isEqualToString:place.city]) {
+                PlaceTableCellInfo *cellCityInfo = [[[PlaceTableCellInfo alloc] init] autorelease];
+                cellCityInfo.text = place.city;
+                cellCityInfo.isCityCell = YES;
+                [curArray addObject:cellCityInfo];
+                lastCityName = place.city;
+            }
+            PlaceTableCellInfo *cellPlaceInfo = [[[PlaceTableCellInfo alloc] init] autorelease];
+            cellPlaceInfo.text = place.text;
+            cellPlaceInfo.imageUrl = place.image;
+            cellPlaceInfo.placeObject = place;
+            cellPlaceInfo.isCityCell = NO;
+            [curArray addObject:cellPlaceInfo];
+            
+            [tmpTableData setValue:curArray forKey:firstLetter];
         }
-        
-        if (![lastCityName isEqualToString:place.city]) {
-            PlaceTableCellInfo *cellCityInfo = [[[PlaceTableCellInfo alloc] init] autorelease];
-            cellCityInfo.text = place.city;
-            [curArray addObject:cellCityInfo];
-            lastCityName = place.city;
-        }
-        PlaceTableCellInfo *cellPlaceInfo = [[[PlaceTableCellInfo alloc] init] autorelease];
-        cellPlaceInfo.text = place.text;
-        cellPlaceInfo.imageUrl = place.image;
-        cellPlaceInfo.placeObject = place;
-        [curArray addObject:cellPlaceInfo];
-        
-        [tmpTableData setValue:curArray forKey:firstLetter];
     }
     
     _tableData = [tmpTableData retain];
+    _alphabetIndex = [newAlphabetIndex retain];
     [_tableView reloadData];
     
     _mapViewController.places = places;
@@ -164,12 +179,12 @@ const int CELL_HEIGHT = 56;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [_tableData allKeys].count;
+    return _alphabetIndex.count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [[_tableData allKeys] objectAtIndex:section];
+    return [_alphabetIndex objectAtIndex:section];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,18 +194,18 @@ const int CELL_HEIGHT = 56;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSString *key = [[_tableData allKeys] objectAtIndex:section];
+    NSString *key = [_alphabetIndex objectAtIndex:section];
     return ((NSArray *)[_tableData valueForKey:key]).count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *key = [[_tableData allKeys] objectAtIndex:indexPath.section];
+    NSString *key = [_alphabetIndex objectAtIndex:indexPath.section];
     NSArray *sectionData = [_tableData valueForKey:key];
     PlaceTableCellInfo *placeInfo = [sectionData objectAtIndex:indexPath.row];
     
     NSString *simpleTableIdentifier = @"PlaceCell";
-    if (placeInfo.imageUrl == nil) {
+    if (placeInfo.isCityCell) {
         simpleTableIdentifier = @"CityCell";
     }
     
@@ -220,14 +235,15 @@ const int CELL_HEIGHT = 56;
                     else {
                         placeInfo.image = [UIImage imageNamed:@"no_image_ph"];
                     }
-                    [_tableView beginUpdates];
                     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    [_tableView endUpdates];
                 }];
             }
             else {
                 placeCell.placeImage.image = placeInfo.image;
             }
+        }
+        else {
+            placeCell.placeImage.image = placeInfo.image = [UIImage imageNamed:@"no_image_ph"];
         }
         return placeCell;
     }
@@ -248,14 +264,13 @@ const int CELL_HEIGHT = 56;
             completionBlock(image);
         }
         else {
-//            NSLog(@"There's some error with data %@", error.description);
             completionBlock(nil);
         }
     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *key = [[_tableData allKeys] objectAtIndex:indexPath.section];
+    NSString *key = [_alphabetIndex objectAtIndex:indexPath.section];
     NSArray *sectionData = [_tableData valueForKey:key];
     PlaceTableCellInfo *placeInfo = [sectionData objectAtIndex:indexPath.row];
     if (placeInfo.placeObject != nil) {

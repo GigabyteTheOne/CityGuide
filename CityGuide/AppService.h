@@ -19,6 +19,7 @@
 
 -(void)beginUpdateDataWithCompletionBlock:(void(^)())completionBlock;
 - (NSArray *)getAllPlaces;
+- (void)addNewPlaceWithCityName:(NSString *)cityName placeName:(NSString *)placeName coordinate:(CLLocationCoordinate2D)coordinate;
 - (NSArray *)getPlacesInRadius:(int)radiusValue ofLocation:(CLLocation*)location;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

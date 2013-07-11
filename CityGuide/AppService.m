@@ -90,6 +90,25 @@ static AppService *_sharedInstance;
     }
 }
 
+-(void)addNewPlaceWithCityName:(NSString *)cityName placeName:(NSString *)placeName coordinate:(CLLocationCoordinate2D)coordinate
+{
+    DBPlaceObject *placeObject = placeObject = (DBPlaceObject *)[NSEntityDescription insertNewObjectForEntityForName:@"DBPlaceObject" inManagedObjectContext:[[AppService sharedInstance] managedObjectContext]];
+    
+    placeObject.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+    placeObject.longtitude = [NSNumber numberWithDouble:coordinate.longitude];
+    placeObject.text = placeName;
+    placeObject.city = cityName;
+    NSError *error = nil;
+    [[[AppService sharedInstance] managedObjectContext] save:&error];
+    if (!error) {
+        NSLog(@"Successfully saved");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewPlace" object:nil];
+    }
+    else {
+        NSLog(@"There's some error with saving data: %@", error.description);
+    }
+}
+
 + (id)getObjectFromJSON:(NSString *)jsonString {
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError *error = nil;

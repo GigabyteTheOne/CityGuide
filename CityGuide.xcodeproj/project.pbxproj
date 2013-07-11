@@ -12,6 +12,8 @@
 		E703D454178018AD00931F94 /* waiting_ph.png in Resources */ = {isa = PBXBuildFile; fileRef = E703D453178018AD00931F94 /* waiting_ph.png */; };
 		E703D45A178028EE00931F94 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703D459178028EE00931F94 /* PlaceTableViewCell.xib */; };
 		E703D45D17802A6000931F94 /* PlaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703D45C17802A6000931F94 /* PlaceTableViewCell.m */; };
+		E756CE69178E6C06009D82F9 /* PlaceInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E756CE68178E6C06009D82F9 /* PlaceInputViewController.xib */; };
+		E756CE6C178E6D15009D82F9 /* PlaceInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E756CE6B178E6D15009D82F9 /* PlaceInputViewController.m */; };
 		E79D1DC1178350250019A4B5 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E79D1DC0178350250019A4B5 /* GoogleMaps.framework */; };
 		E79D1DC3178358110019A4B5 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E79D1DC2178358110019A4B5 /* GoogleMaps.bundle */; };
 		E79D1DC51783583B0019A4B5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E79D1DC41783583B0019A4B5 /* AVFoundation.framework */; };
@@ -54,6 +56,9 @@
 		E703D459178028EE00931F94 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		E703D45B17802A6000931F94 /* PlaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceTableViewCell.h; sourceTree = "<group>"; };
 		E703D45C17802A6000931F94 /* PlaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceTableViewCell.m; sourceTree = "<group>"; };
+		E756CE68178E6C06009D82F9 /* PlaceInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceInputViewController.xib; sourceTree = "<group>"; };
+		E756CE6A178E6D15009D82F9 /* PlaceInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceInputViewController.h; sourceTree = "<group>"; };
+		E756CE6B178E6D15009D82F9 /* PlaceInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceInputViewController.m; sourceTree = "<group>"; };
 		E79D1DC0178350250019A4B5 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = CityGuide/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
 		E79D1DC2178358110019A4B5 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		E79D1DC41783583B0019A4B5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -139,6 +144,9 @@
 				E703D459178028EE00931F94 /* PlaceTableViewCell.xib */,
 				E703D45B17802A6000931F94 /* PlaceTableViewCell.h */,
 				E703D45C17802A6000931F94 /* PlaceTableViewCell.m */,
+				E756CE68178E6C06009D82F9 /* PlaceInputViewController.xib */,
+				E756CE6A178E6D15009D82F9 /* PlaceInputViewController.h */,
+				E756CE6B178E6D15009D82F9 /* PlaceInputViewController.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -303,6 +311,7 @@
 				E703D454178018AD00931F94 /* waiting_ph.png in Resources */,
 				E703D45A178028EE00931F94 /* PlaceTableViewCell.xib in Resources */,
 				E79D1DC3178358110019A4B5 /* GoogleMaps.bundle in Resources */,
+				E756CE69178E6C06009D82F9 /* PlaceInputViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +332,7 @@
 				E703D44D177E0C7100931F94 /* PlaceTableCellInfo.m in Sources */,
 				E703D45D17802A6000931F94 /* PlaceTableViewCell.m in Sources */,
 				E79D1DDC17835AF60019A4B5 /* MapViewController.m in Sources */,
+				E756CE6C178E6D15009D82F9 /* PlaceInputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
